@@ -18,7 +18,7 @@
 
 
 -(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath and: (CGFloat) quality {
-    
+
     if ( ([[extension lowercaseString] isEqualToString:@"png"]) || ([[extension lowercaseString] isEqualToString:@".png"]) ){
         [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
     } else if ([[extension lowercaseString] isEqualToString:@".jpg"] || [[extension lowercaseString] isEqualToString:@".jpeg"]
@@ -38,8 +38,9 @@
     NSString *dateString = [dateFormatter stringFromDate:date];
 
     self.latestCommand = command;
-    NSData* imageData = [NSData dataFromBase64String:[command.arguments objectAtIndex:0]];
-    
+    //NSData* imageData = [NSData dataFromBase64String:[command.arguments objectAtIndex:0]];
+    NSData* imageData = [[NSData alloc] initWithBase64EncodedString:[command.arguments objectAtIndex:0] options:0];
+
     UIImage* image = [[[UIImage alloc] initWithData:imageData] autorelease];
 
     NSString * path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -49,10 +50,10 @@
     extension = [command.arguments objectAtIndex:1];
     CGFloat quality = 1.0;
     quality = [[command.arguments objectAtIndex:2] floatValue] / 100;
-    
-    
+
+
     [self saveImage:image withFileName:ImageName ofType:extension inDirectory:path and:quality];
-    
+
     NSString *tileDirectory = [[NSBundle mainBundle] resourcePath];
     NSString *documentFolderPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSLog(@"Tile Directory: %@", tileDirectory);
@@ -82,7 +83,7 @@
 }
 
 - (void)dealloc
-{   
+{
     [callbackId release];
     [super dealloc];
 }
