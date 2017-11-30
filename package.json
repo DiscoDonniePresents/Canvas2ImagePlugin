@@ -1,0 +1,9 @@
+{
+  "name": "canvas2imageplugin",
+  "version": "0.7.1",
+  "description": "Canvas2ImagePlugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiscoDonniePresents/Canvas2ImagePlugin.git"
+  }
+}
